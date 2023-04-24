@@ -2,6 +2,7 @@ $(function () {
 var saveButtons = $(".btn");
 var textBoxes = $("textarea");
 var currentHour = dayjs().hour()
+var confirmation = $(".saveConfirmation")
 
 textBoxes.each(function() {
   var textBox = $(this);
@@ -19,7 +20,13 @@ saveButtons.click(function () {
   var saveKey = saveButton.parent().attr("id")
   var savedData = JSON.stringify(saveButton.siblings("textarea").val());
   localStorage.setItem(saveKey, savedData)
-});
+
+  confirmation.append("<p>saved to local storage</p>")
+  
+
+})
+
+
  
 $(".description").each(function() {
   var blockHour = parseInt($(this).parent().attr("id"));
