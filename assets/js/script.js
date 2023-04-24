@@ -3,20 +3,26 @@
 // in the html.
 
 $(function () {
-var saveButton = document.querySelector(".btn");
-var textBox = $("textarea")
-var saveKey = "mySaveData"
-var savedData = localStorage.getItem(saveKey);
+var saveButtons = $(".btn");
+var textBoxes = $("textarea");
 
-if(savedData) {
+textBoxes.each(function() {
+  var textBox = $(this);
+  var saveKey = textBox.parent().attr("id");
+  var savedData = localStorage.getItem(saveKey);
+
+  if(savedData) {
   textBox.val(JSON.parse(savedData));
 }
-
-$(saveButton).click(function () {
-  var savedData = JSON.stringify(textBox.val());
-  localStorage.setItem(saveKey, savedData);
 });
- });
+
+saveButtons.click(function () {
+  var saveButton = $(this);
+  var saveKey = saveButton.parent().attr("id")
+  var savedData = JSON.stringify(saveButton.siblings("textarea").val());
+  localStorage.setItem(saveKey, savedData)
+});
+ 
 
 
 
@@ -38,4 +44,4 @@ $(saveButton).click(function () {
     // attribute of each time-block be used to do this?
     //
     // TODO: Add code to display the current date in the header of the page.
- 
+ });
