@@ -1,9 +1,16 @@
 $(function () {
+  //variables
 var saveButtons = $(".btn");
 var textBoxes = $("textarea");
-var currentHour = dayjs().hour()
 var confirmation = $(".saveConfirmation")
+var date = $("#currentDay")
+var currentHour = dayjs().hour()
+var dayOfWeek = dayjs().format('dddd, MMMM DD')
 
+//displays the date
+date.text(dayOfWeek);
+
+//this will get the local storage if there is any and display it.
 textBoxes.each(function() {
   var textBox = $(this);
   var saveKey = textBox.parent().attr("id");
@@ -12,22 +19,18 @@ textBoxes.each(function() {
   if(savedData) {
   textBox.val(JSON.parse(savedData));
 }
-
 });
 
+//this will save the input to local storage if the save button is clicked
 saveButtons.click(function () {
   var saveButton = $(this);
   var saveKey = saveButton.parent().attr("id")
   var savedData = JSON.stringify(saveButton.siblings("textarea").val());
   localStorage.setItem(saveKey, savedData)
-
+  //this will make a message that when the save button is clicked confirming your input was saved
   confirmation.append("<p>saved to local storage</p>")
-  
-
 })
-
-
- 
+//this adds the past, present, and future colors tags to the calender
 $(".description").each(function() {
   var blockHour = parseInt($(this).parent().attr("id"));
 
@@ -40,17 +43,4 @@ $(".description").each(function() {
   }
 });
 
-
-    //
-    // TODO: Add code to apply the past, present, or future class to each time
-    // block by comparing the id to the current hour. HINTS: How can the id
-    // attribute of each time-block be used to conditionally add or remove the
-    // past, present, and future classes? How can Day.js be used to get the
-    // current hour in 24-hour time?
-    //
-    // TODO: Add code to get any user input that was saved in localStorage and set
-    // the values of the corresponding textarea elements. HINT: How can the id
-    // attribute of each time-block be used to do this?
-    //
-    // TODO: Add code to display the current date in the header of the page.
  });
